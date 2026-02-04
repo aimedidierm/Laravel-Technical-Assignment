@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Employee extends Model
+{
+    /** @use HasFactory<\Database\Factories\EmployeeFactory> */
+    use HasFactory;
+
+    protected $fillable = ['name', 'email', 'position', 'phone'];
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $employee) {
+            $latest = self::orderByDesc('id')->value('id') ?? 0;
+            $employee->employee_id = 'EMP-' . str_pad($latest + 1, 4, '0', STR_PAD_LEFT);
+        });
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+}
