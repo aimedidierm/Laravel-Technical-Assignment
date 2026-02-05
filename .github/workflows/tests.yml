@@ -21,8 +21,11 @@ jobs:
       - name: Install Dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
+      - name: Create .env file
+        run: cp .env.example .env
+
       - name: Generate App Key
-        run: php artisan key:generate --env=testing
+        run: php artisan key:generate
 
       - name: Generate OpenAPI Spec
         run: php artisan openapi:generate
