@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Attendance;
-use Barryvdh\LaravelSnappy\Facade\SnappyPdf;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Symfony\Component\HttpFoundation\Response;
 
 class AttendancePDFExport
