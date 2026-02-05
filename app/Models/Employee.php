@@ -16,8 +16,11 @@ class Employee extends Model
     protected static function booted(): void
     {
         static::creating(function (self $employee) {
-            $latest = self::orderByDesc('id')->value('id') ?? 0;
-            $employee->employee_id = 'EMP-' . str_pad($latest + 1, 4, '0', STR_PAD_LEFT);
+            $latestEmployeeId = self::max('employee_id');
+            $nextNumber = $latestEmployeeId
+                ? (int) substr($latestEmployeeId, 4) + 1
+                : 1;
+            $employee->employee_id = 'EMP-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
         });
     }
 
