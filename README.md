@@ -23,7 +23,8 @@ composer install
 # Environment
 cp .env.example .env
 
-# Start Sail (Docker)
+# Build and start Sail (Docker) - includes wkhtmltopdf for PDF generation
+./vendor/bin/sail build --no-cache
 ./vendor/bin/sail up -d
 
 # Generate app key and run migrations
@@ -33,6 +34,8 @@ cp .env.example .env
 # Run queue worker (for email notifications)
 ./vendor/bin/sail artisan queue:listen
 ```
+
+**Note:** The Docker image includes `wkhtmltopdf` for PDF report generation. If you modify the Dockerfile in `docker/8.5/`, rebuild with `./vendor/bin/sail build --no-cache`.
 
 ### Sail Alias (Recommended)
 
